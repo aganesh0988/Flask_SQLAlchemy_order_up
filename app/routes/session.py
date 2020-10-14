@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, redirect
-from flask_login import current_user, logout_user
+from flask import Blueprint, render_template, redirect, url_for
+from flask_login import current_user, logout_user, login_user
 from ..forms import LoginForm
+from app.models import Employee
 
 
 bp = Blueprint("session", __name__, url_prefix="/session")
@@ -13,6 +14,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         empl_number = form.employee_number.data
+        # print(empl_number)
         employee = Employee.query.filter(
             Employee.employee_number == empl_number).first()
         if not employee or not employee.check_password(form.password.data):
