@@ -23,3 +23,29 @@ class Employee(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+
+class Menu(db.Model):
+    __tablename__ = "menus"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
+
+
+class MenuItem(db.Model):
+    __tablename__ = "menu_items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    menu_id = db.Column(db.Integer, db.ForeignKey(
+        'menus.id'), primary_key=True)
+    menu_type_id = db.Column(db.Integer, db.ForeignKey(
+        'menus.id'), primary_key=True)
+
+
+class MenuItemType(db.Model):
+    __tablename__ = "menu_item_types"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
